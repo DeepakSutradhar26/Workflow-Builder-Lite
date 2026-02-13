@@ -18,7 +18,7 @@ export async function POST(req : Request) {
 
         for(const step of steps){
             const output = await runWorkflow(step as StepType, text);
-            results.push({step, output});
+            results.push({step, result : output});
             currentInput = output;
         }
 
@@ -29,7 +29,7 @@ export async function POST(req : Request) {
             }
         });
 
-        return NextResponse.json({results});
+        return NextResponse.json(results);
     }catch(error:any){
         console.error(error);
         return NextResponse.json({
