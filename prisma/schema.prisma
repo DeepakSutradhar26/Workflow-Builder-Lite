@@ -6,7 +6,7 @@ datasource db {
   provider = "postgresql"
 }
 
-model Workflow {
+model workflow {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   inputText String
