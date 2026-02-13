@@ -1,7 +1,8 @@
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-    apiKey : process.env.OPEN_AI_KEY,
+    apiKey : process.env.GROQ_API_KEY,
+    baseURL: "https://api.groq.com/openai/v1",
 });
 
 export type StepType = 'clean' | 'summarize' | 'extract' | 'tag';
@@ -14,13 +15,16 @@ const stepPrompts: Record<StepType, string> = {
 };
 
 export async function runWorkflow(type : StepType, text : string) : Promise<string> {
-    if(!process.env.OPEN_AI_KEY){
+    console.log("KEY EXISTS:", !!process.env.GROQ_API_KEY);
+
+    if(!process.env.GROQ_API_KEY){
         throw new Error("OpenAI key missing, check your env");
     }
 
+
     try{
         const res = await openai.chat.completions.create({
-            model : "gpt-4o-mini",
+            model : "llama-3.1-8b-instant",
             messages : [
                 {
                     role : "system",
@@ -44,6 +48,6 @@ export async function runWorkflow(type : StepType, text : string) : Promise<stri
         return result;
     }catch(error:any){
         console.error(error);
-        throw new Error("Failed to process your request");
+        throw error;
     }
 }

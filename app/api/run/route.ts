@@ -7,10 +7,10 @@ export async function POST(req : Request) {
         const {text, steps} = await req.json();
     
         if(!text || !steps || steps.length == 0){
-            return NextResponse.json({
-                message : "Input text or steps missing",
-                status : 400,
-            });
+            return NextResponse.json(
+                {message : "Input text or steps missing"},
+                {status : 400},
+            );
         }
 
         let currentInput = text;
@@ -19,7 +19,7 @@ export async function POST(req : Request) {
         for(const step of steps){
             const output = await runWorkflow(step as StepType, text);
             results.push({step, output});
-            currentInput = text;
+            currentInput = output;
         }
 
         await prisma.workflow.create({

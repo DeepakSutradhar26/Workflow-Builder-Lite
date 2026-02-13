@@ -30,7 +30,7 @@ export default function Home(){
       const res = await fetch("/api/run", {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify({input : inputText, steps : inputSteps}),
+        body : JSON.stringify({text : inputText, steps : inputSteps}),
       })
 
       if(!res.ok) throw new Error("Workflow execution failed");

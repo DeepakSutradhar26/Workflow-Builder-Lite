@@ -1,7 +1,7 @@
 import {prisma} from "@/lib/prisma";
 import OpenAI from "openai";
 
-export const dynamix = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
 function StatusCard({ title, status, detail }: { title: string; status: string; detail: string }) {
   const isOk = status === 'Connected' || status === 'Running' || status === 'API Key Valid';
@@ -31,9 +31,12 @@ export default async function StatusPage(){
 
     let llmStatus = "Checking...";
     try{
-        const openai = new OpenAI({apiKey : process.env.OPEN_AI_KEY});
+        const openai = new OpenAI({
+          apiKey : process.env.GROQ_API_KEY,
+          baseURL: "https://api.groq.com/openai/v1",
+        });
         await openai.models.list();
-        llmStatus = "API key is Valid";
+        llmStatus = "API Key Valid";
     }catch(error:any){
         llmStatus = "Authentication Failed";
     }
@@ -52,7 +55,7 @@ export default async function StatusPage(){
         <StatusCard 
           title="LLM (OpenAI)" 
           status={llmStatus} 
-          detail={llmStatus === 'API Key Valid' ? "GPT-4o-mini is ready" : "Check OPENAI_API_KEY in .env"} 
+          detail={llmStatus === 'API Key Valid' ? "Groq-ai is ready" : "Check GROQ_API_KEY in .env"} 
         />
       </div>
       
