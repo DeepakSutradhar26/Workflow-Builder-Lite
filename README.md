@@ -27,9 +27,12 @@ Create a `.env` file in the root directory:
 ```text
 DATABASE_URL="your_database_connection_string"
 GROQ_API_KEY="your_openai_api_key"
-
+```
+Terminal commands
+```text
 1. Run `npx prisma db push`: This maps your schema.prisma to the actual database (creates the tables).
 
 2. Run `npx prisma generate`: This creates the @prisma/client code in your node_modules so you get autocomplete in VS Code.
 
 3. Run `npm run dev`
+```
