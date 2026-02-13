@@ -1,7 +1,14 @@
+import { StepType } from "@/lib/engine";
 import {prisma} from "@/lib/prisma";
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
+
+type StepResult = {
+  step: string;
+  output: string;
+};
+
 
 export default async function HistoryPage(){
     const data = await prisma.workflow.findMany({
@@ -38,13 +45,13 @@ export default async function HistoryPage(){
 
               <h3 className="text-xs font-bold text-gray-400 uppercase mb-3">Workflow Steps</h3>
               <div className="space-y-4">
-                {JSON.parse(run.results as string).map((res: any, idx: number) => (
+                {(run.results as StepResult[]).map((res: any, idx: number) => (
                   <div key={idx} className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className="w-6 h-6 rounded bg-gray-900 text-white text-[10px] flex items-center justify-center font-bold">
                         {idx + 1}
                       </div>
-                      {idx !== JSON.parse(run.results as string).length - 1 && (
+                      {idx !== (run.results as string).length - 1 && (
                         <div className="w-px h-full bg-gray-200 my-1" />
                       )}
                     </div>
