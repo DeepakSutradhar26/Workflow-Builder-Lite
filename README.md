@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Workflow Builder Lite (Problem B)
 
-## Getting Started
+A type-safe, AI-powered text processing pipeline built with **Next.js**, **Prisma**, and **GroqAI**. This application allows users to build custom workflows by chaining multiple AI actions (Clean, Summarize, Extract, Tag) together in a specific sequence.
 
-First, run the development server:
+## ✨ Features
+- **Visual Workflow Builder:** Add up to 4 processing steps in any order.
+- **Sequential Chaining:** The output of one AI step is automatically fed as the input to the next step.
+- **Real-time Status:** A dedicated health page to verify Database and LLM connectivity.
+- **Execution History:** Persistence of the last 5 runs using Prisma and PostgreSQL.
+- **Responsive UI:** Built with Tailwind CSS for a clean, modern experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
+- **Framework:** Next.js 14 (App Router)
+- **Database:** Prisma ORM (with PostgreSQL/SQLite)
+- **AI:** Groq-llama-3.1-8b-instant
+- **Styling:** Tailwind CSS
+- **Language:** TypeScript
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏁 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Prerequisites
+- Node.js 18+ 
+- An Groq API Key
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Environment Setup
+Create a `.env` file in the root directory:
+```text
+DATABASE_URL="your_database_connection_string"
+GROQ_API_KEY="your_openai_api_key"
 
-## Learn More
+1. Run `npx prisma db push`: This maps your schema.prisma to the actual database (creates the tables).
 
-To learn more about Next.js, take a look at the following resources:
+2. Run `npx prisma generate`: This creates the @prisma/client code in your node_modules so you get autocomplete in VS Code.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Run `npm run dev`
