@@ -1,5 +1,5 @@
-import { StepType } from "@/lib/engine";
 import {prisma} from "@/lib/prisma";
+import {workflow} from "@prisma/client";
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
@@ -28,7 +28,7 @@ export default async function HistoryPage(){
           <p className="text-gray-500 italic">No activity recorded.</p>
         )}
 
-        {data.map((run) => (
+        {data.map((run : workflow) => (
           <div key={run.id} className="border rounded-2xl bg-white shadow-sm overflow-hidden">
             <div className="bg-gray-50 px-6 py-3 border-b flex justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest font-semibold">
               <span>ID: {run.id}</span>
