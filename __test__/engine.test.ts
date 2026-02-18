@@ -70,3 +70,29 @@ jest.mock("openai", () => {
         }
     }
 });
+
+describe("runWorkFlow", () => {
+    const OLD_ENV = process.env;
+
+    beforeEach(() => {
+        process.env = {...OLD_ENV, GROQ_API_KEY : "dummy_key"};
+    });
+    afterAll(() => {
+        process.env = OLD_ENV;
+    });
+
+    it("Throw error if api key is missing", async() => {
+        process.env.GROQ_API_KEY = "";
+        await expect(runWorkflow("clean", "test")).rejects.toThrow("API key is missing");
+    });
+
+    it.each([
+        ["clean", "Hello    world!", "Hello world!"],
+        ["summarize", "Some long text", "Summary sentence."],
+        ["extract", "Important info", "- Entity1\n- Entity2\n- Entity3"],
+        ["tag", "Technical content", "Technical"]
+    ])("process workflow", async(type, input, output) => {
+        const result = await runWorkflow(type as any, input);
+        expect(result).toBe(output);
+    });
+});
