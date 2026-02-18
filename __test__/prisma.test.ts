@@ -16,6 +16,16 @@ jest.mock("@prisma/adapter-pg", () => {
 });
 
 describe("Prisma Connection", () => {
+    const OLD_ENV = process.env;
+
+    beforeEach(() => {
+        process.env = {...OLD_ENV, NODE_ENV : "development"}
+    })
+
+    afterAll(() => {
+        process.env = OLD_ENV;
+    })
+    
     it("Should create prisma connection", async()=>{
         const {prisma} = await import("@/lib/prisma");
         expect(prisma).toBeDefined();
