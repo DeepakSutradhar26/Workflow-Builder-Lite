@@ -7,6 +7,9 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   testEnvironment: "node",
   moduleDirectories: ["node_modules", "<rootDir>/"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1",
+  },
   testMatch: ["**/__tests__/**/*.test.ts"],
   collectCoverage: true,
   coverageDirectory: "coverage",

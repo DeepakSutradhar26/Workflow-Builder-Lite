@@ -34,7 +34,9 @@ describe("POST api/run", () => {
         let json = await res.json();
 
         expect(res.status).toBe(400);
-        expect(json).toEqual("Input text or steps missing");
+        expect(json).toEqual({
+            message : "Input text or steps missing"}
+        );
     });
 
     it("Error for steps length greater than 4", async() => {
@@ -42,6 +44,8 @@ describe("POST api/run", () => {
         let json = await res.json();
 
         expect(res.status).toBe(400);
-        expect(json).toEqual("Cannot input more than 4 steps");
+        expect(json).toEqual({
+            message : "Cannot input more than 4 steps"
+        });
     });
 });

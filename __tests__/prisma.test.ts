@@ -2,7 +2,7 @@
 
 jest.mock("@prisma/client", () => {
     return {
-        PrismaCLient : jest.fn().mockImplementation(()=>({
+        PrismaClient : jest.fn().mockImplementation(()=>({
             $connect : jest.fn(),
             $disconnect : jest.fn()
         }))
