@@ -13,6 +13,13 @@ export async function POST(req : Request) {
             );
         }
 
+        if(steps.length > 4){
+            return NextResponse.json(
+                {message : "Cannot input more than 4 steps"},
+                {status : 400},
+            );
+        }
+
         let currentInput = text;
         const results = []
 
