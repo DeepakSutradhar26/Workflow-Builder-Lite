@@ -15,12 +15,9 @@ const stepPrompts: Record<StepType, string> = {
 };
 
 export async function runWorkflow(type : StepType, text : string) : Promise<string> {
-    console.log("KEY EXISTS:", !!process.env.GROQ_API_KEY);
-
     if(!process.env.GROQ_API_KEY){
         throw new Error("OpenAI key missing, check your env");
     }
-
 
     try{
         const res = await openai.chat.completions.create({
