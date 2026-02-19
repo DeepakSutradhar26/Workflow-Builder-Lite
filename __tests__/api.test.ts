@@ -1,5 +1,24 @@
+jest.mock("@/lib/engine", () => ({
+  runWorkflow: jest.fn().mockResolvedValue("mocked result"),
+}));
+
+jest.mock("@/lib/prisma", () => {
+  return {
+    __esModule: true,
+    prisma: {
+      workflow: {
+        create: jest.fn().mockResolvedValue({}),
+      },
+    },
+    default: {
+      workflow: {
+        create: jest.fn().mockResolvedValue({}),
+      },
+    },
+  };
+});
+
 import { POST } from "@/app/api/run/route";
-import { runWorkflow } from "@/lib/engine";
 
 jest.mock("@/lib/engine");
 
@@ -13,12 +32,6 @@ const makeRequest = (body : any) => {
 }
 
 describe("POST api/run", () => {
-    beforeEach(() => jest.clearAllMocks());
-
-    it("All errors and resolve", ()=>{
-        (runWorkflow as jest.Mock).mockResolvedValue("mocked result");
-    });
-
     it("resolves workflow correctly", async()=>{
         let res = await POST(makeRequest({text : "Hello", steps : ["clean", "tag"]}));
         let json = await res.json();
