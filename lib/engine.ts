@@ -1,10 +1,5 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-    apiKey : process.env.GROQ_API_KEY,
-    baseURL: "https://api.groq.com/openai/v1",
-});
-
 export type StepType = 'clean' | 'summarize' | 'extract' | 'tag';
 
 const stepPrompts: Record<StepType, string> = {
@@ -15,6 +10,11 @@ const stepPrompts: Record<StepType, string> = {
 };
 
 export async function runWorkflow(type : StepType, text : string) : Promise<string> {
+    const openai = new OpenAI({
+        apiKey : process.env.GROQ_API_KEY,
+        baseURL: "https://api.groq.com/openai/v1",
+    });
+
     if(!process.env.GROQ_API_KEY){
         throw new Error("OpenAI key missing, check your env");
     }
