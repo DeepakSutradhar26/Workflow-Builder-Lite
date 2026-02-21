@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import {logger} from "@/lib/logger";
 
 export type StepType = 'clean' | 'summarize' | 'extract' | 'tag';
 
@@ -10,16 +11,19 @@ const stepPrompts: Record<StepType, string> = {
 };
 
 export async function runWorkflow(type : StepType, text : string) : Promise<string> {
-    const openai = new OpenAI({
-        apiKey : process.env.GROQ_API_KEY,
-        baseURL: "https://api.groq.com/openai/v1",
-    });
-
-    if(!process.env.GROQ_API_KEY){
-        throw new Error("OpenAI key missing, check your env");
-    }
+    const startTime = performance.now();
 
     try{
+        const openai = new OpenAI({
+            apiKey : process.env.GROQ_API_KEY,
+            baseURL: "https://api.groq.com/openai/v1",
+        });
+
+        if(!process.env.GROQ_API_KEY){
+            logger.fatal("OpenAI key missing, check your env");
+            throw new Error("OpenAI key missing, check your env");
+        }
+
         const res = await openai.chat.completions.create({
             model : "llama-3.1-8b-instant",
             messages : [
@@ -39,12 +43,18 @@ export async function runWorkflow(type : StepType, text : string) : Promise<stri
         const result = res.choices[0].message.content?.trim();
 
         if(!result){
+            logger.fatal("AI returned nothing");
             throw new Error("AI returned nothing");
         }
 
+        const endTime = performance.now();
+        const responseTms = (endTime - startTime).toFixed(2);
+
+        logger.info({responseTms, result}, "AI returned result succesfully");
+
         return result;
     }catch(error:any){
-        console.error(error);
+        logger.error(error, "Something Unexpected");
         throw error;
     }
 }
