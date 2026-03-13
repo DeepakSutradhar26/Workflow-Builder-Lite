@@ -2,7 +2,7 @@
 
 This document explains how AI tools were used during development of the
 Workflow Builder Lite project, what was manually verified, and which LLM
-provider the app uses.
+provider the app uses
 
 ---
 
