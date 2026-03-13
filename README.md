@@ -8,7 +8,7 @@ Workflow Builder Lite allows users to:
 - Chain AI operations sequentially
 - Process text through multiple transformation stages
 - Persist execution history
-- Monitor system health in real time
+- Monitor system health in real time.
 
 ## Tech Stack
 
