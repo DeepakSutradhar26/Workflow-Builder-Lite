@@ -1,6 +1,6 @@
 # Workflow Builder Lite
 
-A type-safe, AI-powered text processing pipeline built with Next.js, Prisma, and Groq AI. Users can build structured workflows by chaining up to four AI processing steps in a custom sequence.
+A type-safe, AI-powered text processing pipeline built with Next.js, Prisma, and Groq AI. Users can build structured workflows by chaining up to four AI processing steps in a custom sequence
 
 ## Overview
 
